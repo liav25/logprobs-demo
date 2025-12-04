@@ -6,7 +6,7 @@ This project includes **two independent demos** that do the same thing:
 
 | Demo | Description |
 |------|-------------|
-| **[Web App](https://yourusername.github.io/logprobs-demo/)** | Browser-based UI, no installation needed |
+| **[Web App](https://liav25.github.io/logprobs-demo/)** | Browser-based UI, no installation needed |
 | **Python Script** | Terminal output, great for scripting |
 
 ---
@@ -15,7 +15,7 @@ This project includes **two independent demos** that do the same thing:
 
 A client-side web app with a clean UI. Your API key stays in your browser.
 
-**[→ Try it live](https://yourusername.github.io/logprobs-demo/)**
+**[→ Try it live](https://liav25.github.io/logprobs-demo/)**
 
 ---
 
