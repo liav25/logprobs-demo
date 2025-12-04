@@ -1,0 +1,577 @@
+/* ============================================
+   Logprobs Explorer - Styles
+   ============================================ */
+
+:root {
+    --bg-primary: #f0f4f9;
+    --bg-secondary: #ffffff;
+    --text-primary: #1a1a2e;
+    --text-secondary: #5a5a7a;
+    --text-muted: #8a8aa3;
+    --border-color: #e0e4eb;
+    --border-focus: #4a90d9;
+    --accent: #4a90d9;
+    --accent-hover: #3a7bc8;
+    
+    /* Confidence colors */
+    --confidence-high: #28a745;
+    --confidence-medium: #ffc107;
+    --confidence-low: #fd7e14;
+    --confidence-very-low: #dc3545;
+    
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.12);
+    
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* ============================================
+   Container & Header
+   ============================================ */
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   Input Section
+   ============================================ */
+
+.input-section {
+    margin-bottom: 32px;
+}
+
+/* Gemini-style Prompt Container */
+.prompt-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px 12px;
+    box-shadow: var(--shadow-soft);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.prompt-container:focus-within {
+    border-color: var(--border-focus);
+    box-shadow: var(--shadow-medium), 0 0 0 3px rgba(74, 144, 217, 0.1);
+}
+
+.prompt-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: transparent;
+    resize: none;
+    min-height: 60px;
+    line-height: 1.5;
+}
+
+.prompt-input::placeholder {
+    color: var(--text-muted);
+}
+
+.prompt-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.controls-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Model Dropdown */
+.model-select-wrapper {
+    position: relative;
+}
+
+/* Temperature Input */
+.temperature-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-8px);
+    transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s ease;
+}
+
+.temperature-wrapper.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.temperature-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.temperature-input {
+    width: 60px;
+    padding: 6px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    text-align: center;
+    transition: border-color 0.2s;
+}
+
+.temperature-input:focus {
+    outline: none;
+    border-color: var(--border-focus);
+}
+
+.temperature-input:invalid,
+.temperature-input.invalid {
+    border-color: var(--confidence-very-low);
+    background: #fef2f2;
+}
+
+.temperature-input::-webkit-inner-spin-button,
+.temperature-input::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+.model-select {
+    appearance: none;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 8px 32px 8px 12px;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235a5a7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.model-select:hover {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-focus);
+}
+
+.model-select:focus {
+    outline: none;
+    border-color: var(--border-focus);
+}
+
+/* Submit Button */
+.submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s, opacity 0.2s;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background: var(--accent-hover);
+    transform: scale(1.05);
+}
+
+.submit-btn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   API Key Section
+   ============================================ */
+
+.api-key-section {
+    margin-top: 16px;
+}
+
+.api-key-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 4px 8px 4px 16px;
+    transition: border-color 0.2s;
+}
+
+.api-key-wrapper:focus-within {
+    border-color: var(--border-focus);
+}
+
+.api-key-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    background: transparent;
+    padding: 12px 0;
+}
+
+.api-key-input::placeholder {
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+}
+
+.clear-key-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.clear-key-btn:hover {
+    background: var(--bg-primary);
+    color: var(--confidence-very-low);
+}
+
+.api-key-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    padding-left: 16px;
+}
+
+/* ============================================
+   Results Section
+   ============================================ */
+
+.results-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Token Visualization Card */
+.token-viz-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+}
+
+.token-viz-header {
+    margin-bottom: 16px;
+}
+
+.token-viz-prompt {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.token-viz-prompt strong {
+    color: var(--text-primary);
+}
+
+/* Seq-Logprob Section */
+.seq-logprob-section {
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--confidence-high);
+}
+
+.seq-logprob-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.seq-logprob-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.seq-logprob-value {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 80px;
+}
+
+.seq-logprob-bar {
+    flex: 1;
+    height: 24px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.seq-logprob-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.seq-logprob-percent {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 100px;
+    text-align: right;
+}
+
+.seq-logprob-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Token Grid */
+.token-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: flex-end;
+    min-height: 100px;
+}
+
+.token-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.token-text {
+    padding: 6px 8px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    min-width: 24px;
+    text-align: center;
+    white-space: pre;
+}
+
+.token-bar-container {
+    width: 100%;
+    height: 50px;
+    background: var(--border-color);
+    border-radius: 3px;
+    margin-top: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.token-bar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transition: height 0.3s ease;
+}
+
+.token-prob {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* Complete Text */
+.complete-text {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.complete-text-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+/* ============================================
+   Legend
+   ============================================ */
+
+.legend {
+    margin-top: 32px;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+}
+
+.legend h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.legend-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-primary);
+}
+
+.legend-color {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+}
+
+/* ============================================
+   Loading & Error States
+   ============================================ */
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 40px;
+    color: var(--text-secondary);
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.error-display {
+    padding: 16px 20px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+    font-size: 0.9rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 640px) {
+    .container {
+        padding: 24px 16px;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .prompt-container {
+        padding: 12px 16px 10px;
+    }
+    
+    .legend-items {
+        gap: 12px;
+    }
+    
+    .seq-logprob-content {
+        flex-wrap: wrap;
+    }
+    
+    .seq-logprob-bar {
+        width: 100%;
+        order: 3;
+    }
+}
+

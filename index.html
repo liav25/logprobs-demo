@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Visualize OpenAI token probabilities to understand model confidence and detect potential hallucinations">
+    <title>Logprobs Explorer | Token Probability Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <h1>Logprobs Explorer</h1>
+            <p class="subtitle">Visualize token probabilities to understand model confidence</p>
+        </header>
+
+        <section class="input-section">
+            <!-- Gemini-style prompt input -->
+            <div class="prompt-container">
+                <textarea 
+                    id="prompt-input" 
+                    class="prompt-input" 
+                    placeholder="Enter a prompt to test model confidence..."
+                    rows="3"
+                ></textarea>
+                <div class="prompt-controls">
+                    <div class="controls-left">
+                        <div class="model-select-wrapper">
+                            <select id="model-select" class="model-select">
+                                <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                                <option value="gpt-4o">GPT-4o</option>
+                                <option value="gpt-4o-mini">GPT-4o Mini</option>
+                                <option value="gpt-4.1">GPT-4.1</option>
+                                <option value="gpt-4.1-mini">GPT-4.1 Mini</option>
+                                <option value="gpt-4.1-nano-2025-04-14">GPT-4.1 Nano</option>                            
+                            </select>
+                        </div>
+                        <div id="temperature-wrapper" class="temperature-wrapper">
+                            <label for="temperature-input" class="temperature-label">Temp</label>
+                            <input 
+                                type="number" 
+                                id="temperature-input" 
+                                class="temperature-input" 
+                                value="0" 
+                                min="0" 
+                                max="2" 
+                                step="0.1"
+                            >
+                        </div>
+                    </div>
+                    <button id="submit-btn" class="submit-btn" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- API Key input -->
+            <div class="api-key-section">
+                <div class="api-key-wrapper">
+                    <input 
+                        type="text" 
+                        id="api-key-input" 
+                        class="api-key-input" 
+                        placeholder="Paste your OpenAI API key here..."
+                    >
+                    <button id="clear-key-btn" class="clear-key-btn" title="Clear API key">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <p class="api-key-hint">Your key is stored locally and never sent anywhere except OpenAI</p>
+            </div>
+        </section>
+
+        <!-- Results section -->
+        <section id="results-section" class="results-section">
+            <!-- Token visualizations will be rendered here -->
+        </section>
+
+        <!-- Legend -->
+        <section class="legend">
+            <h3>Confidence Legend</h3>
+            <div class="legend-items">
+                <span class="legend-item">
+                    <span class="legend-color" style="background: #28a745;"></span>
+                    High (&gt;80%)
+                </span>
+                <span class="legend-item">
+                    <span class="legend-color" style="background: #ffc107;"></span>
+                    Medium (50-80%)
+                </span>
+                <span class="legend-item">
+                    <span class="legend-color" style="background: #fd7e14;"></span>
+                    Low (20-50%)
+                </span>
+                <span class="legend-item">
+                    <span class="legend-color" style="background: #dc3545;"></span>
+                    Very Low (&lt;20%)
+                </span>
+            </div>
+        </section>
+
+        <!-- Loading indicator -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <span>Analyzing token probabilities...</span>
+        </div>
+
+        <!-- Error display -->
+        <div id="error-display" class="error-display hidden"></div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
